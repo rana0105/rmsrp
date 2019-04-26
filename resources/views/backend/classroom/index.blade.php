@@ -48,7 +48,13 @@
                 <tr>
                     <td>{{ ++$i }}</td>
                     <td>{{ $classroom->room_no }}</td>
-                    <td>{{ $classroom->room_Type }}</td>
+                    <td>
+                        @if($classroom->room_Type == 1)
+                         <span class="badge badge-info">Theory</span>
+                        @else
+                        <span class="badge badge-info">Lab</span>
+                        @endif
+                    </td>
                     <td>
                         <a class="btn btn-sm btn-light editClassRoom" data-toggle="modal" data-target="#classroomEditModal" data-id="{{$classroom->id}}" href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                         {{-- {!! Form::open(['method' => 'DELETE','route' => ['classroom.destroy', $classroom->id], 'class'=>'delete_form', 'style'=>'display:inline']) !!}

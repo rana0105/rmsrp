@@ -1,7 +1,6 @@
 <?php
 
 use App\User;
-use App\Models\Favourite;
 use Illuminate\Http\Request;
 
 /*
@@ -29,6 +28,7 @@ Route::prefix('admin')->group(function () {
     Route::post('/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
     Route::get('/', 'AdminController@index')->name('admin.dashboard');
     Route::get('/logout', 'Auth\AdminLoginController@logout')->name('admin.logout');
+
     Route::resource('users', 'UserController');
     Route::get('userShowModal/{id}', 'UserController@userShowModal');
     Route::get('userEditModal/{id}', 'UserController@userEditModal');
@@ -46,21 +46,13 @@ Route::prefix('admin')->group(function () {
     Route::get('editTimeSlot/{id}', 'Backend\TimeSlotController@editTimeSlot');
 
     // semester
-    Route::resource('semester', 'Backend\TimeSlotController');
-    Route::get('editTimeSlot/{id}', 'Backend\TimeSlotController@editTimeSlot');
+    Route::resource('semester', 'Backend\SemesterController');
+    Route::get('editSemester/{id}', 'Backend\SemesterController@editSemester');
 
     // classroom
     Route::resource('classroom', 'Backend\ClassRoomController');
     Route::get('editClassRoom/{id}', 'Backend\ClassRoomController@editClassRoom');
 
-    Route::post('custom', 'Backend\PromoCodeController@customCode')->name('custom');
-    Route::post('exportCSV', 'Backend\PromoCodeController@exportCSV');
-    Route::post('exportXL', 'Backend\PromoCodeController@exportXL');
-
-    // Announcement
-    Route::resource('announcement', 'Backend\AnnouncementController');
-    Route::get('announcementEdit/{id}', 'Backend\AnnouncementController@announcementEdit');
-    Route::get('announcements', 'Backend\AnnouncementController@announcementList')->name('announcement.list');
 
 });
 
