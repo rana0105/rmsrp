@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Backend;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Semester;
+use Illuminate\Http\Request;
 
 class SemesterController extends Controller
 {
@@ -19,8 +20,8 @@ class SemesterController extends Controller
 
     public function index(Request $request)
     {
-        $timeslots = TimeSlot::all();
-        return view('backend.timeslot.index', compact('timeslots'))
+        $semesters = Semester::all();
+        return view('backend.semester.index', compact('semesters'))
         ->with('i', ($request->input('page', 1) - 1) * 5);
     }
 
@@ -43,14 +44,11 @@ class SemesterController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'start_time' => 'required',
-            'end_time' => 'required',
-            'time_id' => 'required'
-            //'slot_status' => 'required'
+            'semester' => 'required'
         ]);
 
-        TimeSlot::create($request->all());
-        return redirect()->route('timeslot.index')->with('success', 'Time slot has been save successfully save');
+        Semester::create($request->all());
+        return redirect()->route('semester.index')->with('success', 'Semester has been save successfully save');
     }
 
     /**
@@ -75,10 +73,10 @@ class SemesterController extends Controller
         //
     }
 
-    public function editTimeSlot($id)
+    public function editSemester($id)
     {
-        $timeslot = TimeSlot::find($id);
-        return view('backend.timeslot.editTimeSlot', compact('timeslot'));
+        $semester = Semester::find($id);
+        return view('backend.semester.editSemester', compact('semester'));
     }
 
     /**
@@ -91,15 +89,12 @@ class SemesterController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'start_time' => 'required',
-            'end_time' => 'required',
-            'time_id' => 'required'
-            //'slot_status' => 'required'
+            'semester' => 'required'
         ]);
 
-        $timeslot = TimeSlot::find($id);
-        $timeslot->update($request->all());
-        return redirect()->route('timeslot.index')->with('success', 'Time slot has been updated successfully');
+        $semester = Semester::find($id);
+        $semester->update($request->all());
+        return redirect()->route('semester.index')->with('success', 'Semester has been updated successfully');
     }
 
     /**
@@ -110,7 +105,7 @@ class SemesterController extends Controller
      */
     public function destroy($id)
     {
-        TimeSlot::find($id)->delete();
-        return redirect()->route('timeslot.index')->with('success', 'Time slot has been deleted successfully');
+        Semester::find($id)->delete();
+        return redirect()->route('semester.index')->with('success', 'Semester has been deleted successfully');
     }
 }

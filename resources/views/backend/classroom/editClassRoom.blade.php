@@ -8,8 +8,13 @@
         <div class="form-group">
             <strong>Status:</strong>
             <select name="room_Type" class="custom-select mr-sm-2" id="room_Type" required>                            
+<<<<<<< 729483b758363c10a664029ff636645e10caf7d5
                 <option value="1">Theory</option>
                 <option value="0">Lab</option>
+=======
+                <option value="1" {{ $classroom->room_Type == 1 ? 'selected="selected"' : '' }}>Theory</option>
+                <option value="0" {{ $classroom->room_Type == 0 ? 'selected="selected"' : '' }}>Lab</option>
+>>>>>>> semester done
             </select>
         </div>
     </div>
