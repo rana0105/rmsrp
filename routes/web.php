@@ -32,9 +32,10 @@ Route::prefix('admin')->group(function () {
     Route::resource('users', 'UserController');
     Route::get('userShowModal/{id}', 'UserController@userShowModal');
     Route::get('userEditModal/{id}', 'UserController@userEditModal');
-    // region
-    Route::resource('region', 'Backend\RegionController');
-    Route::get('regionEdit/{id}', 'Backend\RegionController@regionEdit');
+    // faculty
+    Route::resource('faculty', 'Backend\FacultyController');
+    Route::get('faculty/{id}', 'Backend\FacultyController@facultyEdit')->name('facultyEdit');
+    
     // group
     Route::resource('chatroom', 'Backend\ChatRoomDetailsController');
     Route::get('chatroomEdit/{id}', 'Backend\ChatRoomDetailsController@chatroomEdit');

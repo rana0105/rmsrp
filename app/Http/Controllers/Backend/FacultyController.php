@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Models\Backend\Region;
+use App\User;
+use Hash;
 use Illuminate\Http\Request;
 
-class RegionController extends Controller
+class FacultyController extends Controller
 {
 
     /**
@@ -22,8 +23,8 @@ class RegionController extends Controller
     
     public function index(Request $request)
     {
-        $regions = Region::all();
-        return view('backend.region.index', compact('regions'))
+        $faculties = User::all();
+        return view('backend.faculty.index', compact('faculties'))
         ->with('i', ($request->input('page', 1) - 1) * 5);
     }
 
@@ -46,11 +47,19 @@ class RegionController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'region_name' => 'required'
+            'name' => 'required',            
+            'email' => 'required|email|unique:users',
+            'password' => 'required',
+            'phone_no' => 'required|unique:users'
         ]);
-
-        Region::create($request->all());
-        return redirect()->route('region.index')->with('success', 'Region has been save successfully save');
+       
+        User::create([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'password' => Hash::make($request->input('password')),
+            'phone_no' => $request->input('phone_no')
+        ]);
+        return redirect()->route('faculty.index')->with('success', 'Faculty has been successfully Created.');
     }
 
     /**
@@ -75,10 +84,10 @@ class RegionController extends Controller
         //
     }
 
-    public function regionEdit($id)
+    public function facultyEdit($id)
     {
-        $region = Region::find($id);
-        return view('backend.region.editRegion', compact('region'));
+        $faculty = User::find($id);
+        return view('backend.faculty.editFaculty', compact('faculty'));
     }
 
     /**
@@ -91,12 +100,20 @@ class RegionController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'region_name' => 'required'
+            'name' => 'required',            
+            'email' => 'required|email|unique:users',
+            'password' => 'required',
+            'phone_no' => 'required|unique:users'
         ]);
 
-        $region = Region::find($id);
-        $region->update($request->all());
-        return redirect()->route('region.index')->with('success', 'Region has been updated successfully');
+        $faculty = User::find($id);
+        $faculty->update([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'password' => Hash::make($request->input('password')),
+            'phone_no' => $request->input('phone_no')
+        ]);
+        return redirect()->route('faculty.index')->with('success', 'Faculty has been updated successfully');
     }
 
     /**
@@ -107,7 +124,7 @@ class RegionController extends Controller
      */
     public function destroy($id)
     {
-        Region::find($id)->delete();
-        return redirect()->route('region.index')->with('success', 'Region has been deleted successfully');
+        User::find($id)->delete();
+        return redirect()->route('faculty.index')->with('success', 'Faculty has been deleted successfully');
     }
 }
