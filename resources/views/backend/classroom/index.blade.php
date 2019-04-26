@@ -7,7 +7,7 @@
     <li class="breadcrumb-item">
         <a href="{{url('/admin')}}">Dashboard</a>
     </li>
-    <li class="breadcrumb-item active">Faculty</li>
+    <li class="breadcrumb-item active">Class Room</li>
     </ol>
     @if ($message = Session::get('success'))
     <div class="alert alert-success">
@@ -18,10 +18,10 @@
     <div class="card mb-3">
     <div class="card-header">
         <div class="pull-left">
-            <i class="fas fa-table"></i>Faculty 
+            <i class="fas fa-table"></i>Routine Management
         </div>
         <div class="pull-right">
-            <a class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#facultyCreateModal" href="#"><i class="fa fa-plus" aria-hidden="true"></i>Faculty</a>
+            <a class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#classroomCreateModal" href="#"><i class="fa fa-plus" aria-hidden="true"></i>Class Room</a>
         </div>   
     </div>
     <div class="card-body">
@@ -30,33 +30,30 @@
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Faculty Name</th>
-                    <th>Email</th>
-                    <th>Phone No</th>
+                    <th>Room No</th>
+                    <th>Room Type</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tfoot>
                 <tr>
                     <th>No</th>
-                    <th>Faculty Name</th>
-                    <th>Email</th>
-                    <th>Phone No</th>
+                    <th>Room No</th>
+                    <th>Room Type</th>
                     <th>Action</th>
                 </tr>
             </tfoot>
             <tbody>
-                @foreach ($faculties as $key => $faculty)
+                @foreach ($classrooms as $key => $classroom)
                 <tr>
                     <td>{{ ++$i }}</td>
-                    <td>{{ $faculty->name }}</td>   
-                    <td>{{ $faculty->email }}</td>
-                    <td>{{ $faculty->phone_no }}</td>
+                    <td>{{ $classroom->room_no }}</td>
+                    <td>{{ $classroom->room_Type }}</td>
                     <td>
-                        <a class="btn btn-sm btn-light editFaculty" data-toggle="modal" data-target="#facultyEditModal" data-id="{{$faculty->id}}" href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                        {!! Form::open(['method' => 'DELETE','route' => ['faculty.destroy', $faculty->id], 'class'=>'delete_form', 'style'=>'display:inline']) !!}
+                        <a class="btn btn-sm btn-light editClassRoom" data-toggle="modal" data-target="#classroomEditModal" data-id="{{$classroom->id}}" href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                        {{-- {!! Form::open(['method' => 'DELETE','route' => ['classroom.destroy', $classroom->id], 'class'=>'delete_form', 'style'=>'display:inline']) !!}
                             <a class="btn btn-sm btn-light delete-btn"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                        {!! Form::close() !!}
+                        {!! Form::close() !!} --}}
                     </td>
                 </tr>
                 @endforeach
@@ -67,11 +64,11 @@
     <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
 
 {{-- Start Modal 'for' post category create --}}
-<div class="modal fade" id="facultyCreateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="classroomCreateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Faculty Create</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Class Room Create</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -87,19 +84,22 @@
             </ul>
         </div>
         @endif
-            {!! Form::open(array('route' => 'faculty.store','method'=>'POST')) !!}
+            {!! Form::open(array('route' => 'classroom.store','method'=>'POST')) !!}
             {{ csrf_field() }}
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <strong>Name:</strong>
-                        {!! Form::text('name', null, array('placeholder' => 'Faculty Name','class' => 'form-control')) !!}                        
-                        <strong>Email:</strong>
-                        {!! Form::email('email', null, array('placeholder' => 'Faculty Email','class' => 'form-control')) !!}                        
-                        <strong>Phone No:</strong>
-                        {!! Form::text('phone_no', null, array('placeholder' => 'Phone NO','class' => 'form-control')) !!}
-                        <strong>Password:</strong>
-                        {!! Form::password('password', array('placeholder' => 'Password','class' => 'form-control')) !!}  
+                        <strong>Room No:</strong>
+                        {!! Form::text('room_no', null, array('placeholder' => 'Room No','class' => 'form-control')) !!}
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <strong>Class Type:</strong>
+                        <select name="room_Type" class="custom-select mr-sm-2" id="room_Type" required>                            
+                            <option value="1">Theory</option>
+                            <option value="0">Lab</option>
+                        </select>
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12 text-center">
@@ -116,17 +116,17 @@
 {{-- End post category create Modal --}}
 
 {{-- Start Modal 'for' Post category edit --}}
-<div class="modal fade" id="facultyEditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="classroomEditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Faculty Edit</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Class Room Edit</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <div class="modal-body regionEditAdd">
-           
+        <div class="modal-body classroomEditAdd">
+
         </div>
         <div class="modal-footer">
         </div>
@@ -146,10 +146,10 @@
 <script>
     $(document).ready(function(){
         //edit region in modal
-        $(document).on('click', 'a.editFaculty', function() {
+        $(document).on('click', 'a.editClassRoom', function() {
             var id = $(this).attr('data-id');
-            $.get('editFaculty/'+id, function(data){
-                $('#facultyEditModal').find('.regionEditAdd').first().html(data);
+            $.get('editClassRoom/'+id, function(data){
+                $('#classroomEditModal').find('.classroomEditAdd').first().html(data);
             });
         });
        

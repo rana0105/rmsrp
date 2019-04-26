@@ -34,14 +34,24 @@ Route::prefix('admin')->group(function () {
     Route::get('userEditModal/{id}', 'UserController@userEditModal');
     // faculty
     Route::resource('faculty', 'Backend\FacultyController');
-    Route::get('faculty/{id}', 'Backend\FacultyController@facultyEdit')->name('facultyEdit');
+    Route::get('editFaculty/{id}', 'Backend\FacultyController@editFaculty')->name('editFaculty');
     
     // group
     Route::resource('chatroom', 'Backend\ChatRoomDetailsController');
     Route::get('chatroomEdit/{id}', 'Backend\ChatRoomDetailsController@chatroomEdit');
 
-    // promocode
-    Route::resource('promocode', 'Backend\PromoCodeController');
+    // time slot
+    Route::resource('timeslot', 'Backend\TimeSlotController');
+    Route::get('editTimeSlot/{id}', 'Backend\TimeSlotController@editTimeSlot');
+
+    // semester
+    Route::resource('semester', 'Backend\TimeSlotController');
+    Route::get('editTimeSlot/{id}', 'Backend\TimeSlotController@editTimeSlot');
+
+    // classroom
+    Route::resource('classroom', 'Backend\ClassRoomController');
+    Route::get('editClassRoom/{id}', 'Backend\ClassRoomController@editClassRoom');
+
     Route::post('custom', 'Backend\PromoCodeController@customCode')->name('custom');
     Route::post('exportCSV', 'Backend\PromoCodeController@exportCSV');
     Route::post('exportXL', 'Backend\PromoCodeController@exportXL');

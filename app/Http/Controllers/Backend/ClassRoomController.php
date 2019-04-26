@@ -3,28 +3,25 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\User;
-use Hash;
+use App\Models\ClassRoom;
 use Illuminate\Http\Request;
 
-class FacultyController extends Controller
+class ClassRoomController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
     public function __construct()
     {
         $this->middleware('auth:admin');
     }
-    
+
     public function index(Request $request)
     {
-        $faculties = User::all();
-        return view('backend.faculty.index', compact('faculties'))
+        $classrooms = ClassRoom::all();
+        return view('backend.classroom.index', compact('classrooms'))
         ->with('i', ($request->input('page', 1) - 1) * 5);
     }
 
@@ -47,19 +44,12 @@ class FacultyController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required',            
-            'email' => 'required|email|unique:users',
-            'password' => 'required',
-            'phone_no' => 'required|unique:users'
+            'room_no' => 'required',
+            'room_Type' => 'required'
         ]);
-       
-        User::create([
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'password' => Hash::make($request->input('password')),
-            'phone_no' => $request->input('phone_no')
-        ]);
-        return redirect()->route('faculty.index')->with('success', 'Faculty has been successfully Created.');
+
+        ClassRoom::create($request->all());
+        return redirect()->route('classroom.index')->with('success', 'Room no has been save successfully save');
     }
 
     /**
@@ -84,10 +74,10 @@ class FacultyController extends Controller
         //
     }
 
-    public function editFaculty($id)
+    public function editClassRoom($id)
     {
-        $faculty = User::find($id);
-        return view('backend.faculty.editFaculty', compact('faculty'));
+        $classroom = ClassRoom::find($id);
+        return view('backend.classroom.editClassRoom', compact('classroom'));
     }
 
     /**
@@ -100,19 +90,13 @@ class FacultyController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name' => 'required',            
-            'email' => 'required|email',
-            'phone_no' => 'required'
+            'room_no' => 'required',
+            'room_Type' => 'required'
         ]);
 
-        $faculty = User::find($id);
-        $faculty->update([
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'password' => Hash::make($request->input('password')),
-            'phone_no' => $request->input('phone_no')
-        ]);
-        return redirect()->route('faculty.index')->with('success', 'Faculty has been updated successfully');
+        $classroom = ClassRoom::find($id);
+        $classroom->update($request->all());
+        return redirect()->route('classroom.index')->with('success', 'Room no has been updated successfully');
     }
 
     /**
@@ -123,7 +107,7 @@ class FacultyController extends Controller
      */
     public function destroy($id)
     {
-        User::find($id)->delete();
-        return redirect()->route('faculty.index')->with('success', 'Faculty has been deleted successfully');
+        ClassRoom::find($id)->delete();
+        return redirect()->route('classroom.index')->with('success', 'Room No has been deleted successfully');
     }
 }
