@@ -15,9 +15,9 @@
         </div>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="{{ route('region.index') }}">
+        <a class="nav-link" href="{{ route('faculty.index') }}">
         <i class="fas fa-fw fa-map"></i>
-        <span>Region</span></a>
+        <span>Faculty</span></a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="{{ route('chatroom.index') }}">
