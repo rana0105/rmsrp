@@ -32,13 +32,14 @@ Route::prefix('admin')->group(function () {
     Route::resource('users', 'UserController');
     Route::get('userShowModal/{id}', 'UserController@userShowModal');
     Route::get('userEditModal/{id}', 'UserController@userEditModal');
+
     // faculty
     Route::resource('faculty', 'Backend\FacultyController');
     Route::get('editFaculty/{id}', 'Backend\FacultyController@editFaculty')->name('editFaculty');
     
-    // group
-    Route::resource('chatroom', 'Backend\ChatRoomDetailsController');
-    Route::get('chatroomEdit/{id}', 'Backend\ChatRoomDetailsController@chatroomEdit');
+    // course
+    Route::resource('course', 'Backend\CourseController');
+    Route::get('editCourse/{id}', 'Backend\CourseController@editCourse');
 
     // time slot
     Route::resource('timeslot', 'Backend\TimeSlotController');

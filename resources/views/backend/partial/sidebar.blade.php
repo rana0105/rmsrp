@@ -11,13 +11,14 @@
         <span>Admin Activities</span>
         </a>
         <div class="dropdown-menu bgstyle" aria-labelledby="pagesDropdown">
-        <a class="dropdown-item" href="{{ route('users.index') }}">Users</a>
+            <a class="dropdown-item" href="{{ route('users.index') }}">Admins</a>
+            <a class="dropdown-item" href="{{ route('faculty.index') }}">Faculty</a>
         </div>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="{{ route('faculty.index') }}">
+        <a class="nav-link" href="{{ route('course.index') }}">
         <i class="fas fa-fw fa-map"></i>
-        <span>Faculty</span></a>
+        <span>Course</span></a>
     </li>
     <li class="nav-item">        
         <a class="nav-link" href="{{ route('timeslot.index') }}">
