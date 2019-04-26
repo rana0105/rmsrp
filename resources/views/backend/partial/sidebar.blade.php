@@ -19,19 +19,19 @@
         <i class="fas fa-fw fa-map"></i>
         <span>Faculty</span></a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('chatroom.index') }}">
-        <i class="fas fa-fw fa-users"></i>
-        <span>Chatroom</span></a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('promocode.index') }}">
+    <li class="nav-item">        
+        <a class="nav-link" href="{{ route('timeslot.index') }}">
         <i class="fas fa-fw fa-tags"></i>
-        <span>Promo Code</span></a>
+        <span>Time Slot</span></a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="{{ route('announcement.index') }}">
+        <a class="nav-link" href="{{ route('semester.index') }}">
         <i class="fas fa-bullhorn"></i>
-        <span>Announcement</span></a>
+        <span>Semester</span></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('classroom.index') }}">
+        <i class="fas fa-bullhorn"></i>
+        <span>Class Room</span></a>
     </li>
 </ul>

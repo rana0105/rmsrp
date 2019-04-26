@@ -3,13 +3,11 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\User;
-use Hash;
+use App\Models\TimeSlot;
 use Illuminate\Http\Request;
 
-class FacultyController extends Controller
+class TimeSlotController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      *
@@ -20,11 +18,11 @@ class FacultyController extends Controller
     {
         $this->middleware('auth:admin');
     }
-    
+
     public function index(Request $request)
     {
-        $faculties = User::all();
-        return view('backend.faculty.index', compact('faculties'))
+        $timeslots = TimeSlot::all();
+        return view('backend.timeslot.index', compact('timeslots'))
         ->with('i', ($request->input('page', 1) - 1) * 5);
     }
 
@@ -47,19 +45,14 @@ class FacultyController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required',            
-            'email' => 'required|email|unique:users',
-            'password' => 'required',
-            'phone_no' => 'required|unique:users'
+            'start_time' => 'required',
+            'end_time' => 'required',
+            'time_id' => 'required'
+            //'slot_status' => 'required'
         ]);
-       
-        User::create([
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'password' => Hash::make($request->input('password')),
-            'phone_no' => $request->input('phone_no')
-        ]);
-        return redirect()->route('faculty.index')->with('success', 'Faculty has been successfully Created.');
+
+        TimeSlot::create($request->all());
+        return redirect()->route('timeslot.index')->with('success', 'Time slot has been save successfully save');
     }
 
     /**
@@ -84,10 +77,10 @@ class FacultyController extends Controller
         //
     }
 
-    public function editFaculty($id)
+    public function editTimeSlot($id)
     {
-        $faculty = User::find($id);
-        return view('backend.faculty.editFaculty', compact('faculty'));
+        $timeslot = TimeSlot::find($id);
+        return view('backend.timeslot.editTimeSlot', compact('timeslot'));
     }
 
     /**
@@ -100,19 +93,15 @@ class FacultyController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name' => 'required',            
-            'email' => 'required|email',
-            'phone_no' => 'required'
+            'start_time' => 'required',
+            'end_time' => 'required',
+            'time_id' => 'required'
+            //'slot_status' => 'required'
         ]);
 
-        $faculty = User::find($id);
-        $faculty->update([
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'password' => Hash::make($request->input('password')),
-            'phone_no' => $request->input('phone_no')
-        ]);
-        return redirect()->route('faculty.index')->with('success', 'Faculty has been updated successfully');
+        $timeslot = TimeSlot::find($id);
+        $timeslot->update($request->all());
+        return redirect()->route('timeslot.index')->with('success', 'Time slot has been updated successfully');
     }
 
     /**
@@ -123,7 +112,7 @@ class FacultyController extends Controller
      */
     public function destroy($id)
     {
-        User::find($id)->delete();
-        return redirect()->route('faculty.index')->with('success', 'Faculty has been deleted successfully');
+        TimeSlot::find($id)->delete();
+        return redirect()->route('timeslot.index')->with('success', 'Time slot has been deleted successfully');
     }
 }
