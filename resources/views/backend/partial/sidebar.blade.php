@@ -35,4 +35,9 @@
         <i class="fas fa-bullhorn"></i>
         <span>Class Room</span></a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('weekday.index') }}">
+        <i class="fas fa-bullhorn"></i>
+        <span>Week Day</span></a>
+    </li>
 </ul>
