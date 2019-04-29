@@ -53,6 +53,10 @@ Route::prefix('admin')->group(function () {
     Route::resource('classroom', 'Backend\ClassRoomController');
     Route::get('editClassRoom/{id}', 'Backend\ClassRoomController@editClassRoom');
 
+    // classroom
+    Route::resource('weekday', 'Backend\WeekDayController');
+    Route::get('editWeekDay/{id}', 'Backend\WeekDayController@editWeekDay');
+
 
 });
 
