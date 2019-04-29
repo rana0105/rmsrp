@@ -14,11 +14,19 @@
         <p>{{ $message }}</p>
     </div>
     @endif
+    @if (Session::has('error'))
+        <div class="alert alert-danger">{{ Session::get('error') }}</div>
+    @endif
     <!-- DataTables Example -->
     <div class="card mb-3">
     <div class="card-header">
         <div class="pull-left">
-            <i class="fas fa-table"></i>Class Routine 
+            @php $day = \Carbon\Carbon::now()->format( 'l' ); @endphp 
+           <select name="days" id="" class="form-control">
+            @foreach($days as $d)
+               <option value="{{ $d }}" {{ $day == $d ? 'selected="selected"' : '' }}>{{ $d }}</option>
+            @endforeach
+           </select>
         </div>
         <div class="pull-right">
             <a class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#routineCreateModal" href="#"><i class="fa fa-plus" aria-hidden="true"></i>Class Routine</a>
@@ -87,23 +95,45 @@
             </ul>
         </div>
         @endif
-            {!! Form::open(array('route' => 'faculty.store','method'=>'POST')) !!}
+            {!! Form::open(array('route' => 'routine.store','method'=>'POST')) !!}
             {{ csrf_field() }}
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <strong>Select Day:</strong> 
-                        {!! Form::select('days', $days, null, ['class' => 'form-control']) !!}                        
-                        <strong>Select Course:</strong>                      
-                        {!! Form::select('course', $course, null, ['class' => 'form-control']) !!}
-                        <strong>Select Semester:</strong>                  
-                        {!! Form::select('semester', $semester, null, ['class' => 'form-control']) !!}
-                        <strong>Select Rooms:</strong>                        
-                        {!! Form::select('room', $room, null, ['class' => 'form-control']) !!}
-                        <strong>Section:</strong>
-                        {!! Form::text('section', null, array('placeholder' => 'Section','class' => 'form-control')) !!}                      
-                        <strong>Academic year:</strong>
-                        {!! Form::text('year', null, array('placeholder' => 'Academic year:','class' => 'form-control')) !!}
+                        @php
+                            $days = $days->toArray();
+                            $faculty = $faculty->toArray();
+                            $course = $course->toArray();
+                            $room = $room->toArray();
+                            $semester = $semester->toArray();
+                            $period = $period->toArray();
+                        @endphp 
+                        {!! Form::select('days', array_merge([0 => 'Select Day'], $days), null, ['class' => 'form-control']) !!}
+
+                        {!! Form::select('semester',array_merge([0 => 'Select Semester'], $semester), null, ['class' => 'form-control']) !!}
+                        
+                        {!! Form::select('faculty', array_merge([0 => 'Select Faculty'], $faculty), null, ['class' => 'form-control']) !!}
+
+                        {!! Form::select('course', array_merge([0 => 'Select Course'], $course), null, ['class' => 'form-control']) !!}
+                                            
+                        {!! Form::select('room', array_merge([0 => 'Select Room'], $room), null, ['class' => 'form-control']) !!}
+
+                        <select name="room_type" class="form-control" id="room_Type" required>
+                            <option value="">Select Room Type</option>
+                            <option value="1">Theory</option>
+                            <option value="0">Lab</option>
+                        </select> 
+                                       
+                        {!! Form::select('period',array_merge([0 => 'Select Period'], $period), null, ['class' => 'form-control']) !!}                
+                        
+                        <select name="section" id="" class="form-control">
+                            <option value="">Select Section</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                        </select>
+                        <!-- {!! Form::text('year', null, array('placeholder' => 'Academic year:','class' => 'form-control')) !!} -->
                          
                     </div>
                 </div>

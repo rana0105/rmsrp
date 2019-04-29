@@ -14,6 +14,9 @@
         <p>{{ $message }}</p>
     </div>
     @endif
+    @if (Session::has('error'))
+        <div class="alert alert-danger">{{ Session::get('error') }}</div>
+    @endif
     <!-- DataTables Example -->
     <div class="card mb-3">
     <div class="card-header">
@@ -30,6 +33,7 @@
             <thead>
                 <tr>
                     <th>No</th>
+                    <th>Period</th>
                     <th>Start Time</th>
                     <th>End Time</th>
                     <th>Time ID</th>
@@ -40,6 +44,7 @@
             <tfoot>
                 <tr>
                     <th>No</th>
+                    <th>Period</th>
                     <th>Start Time</th>
                     <th>End Time</th>
                     <th>Time ID</th>
@@ -51,6 +56,7 @@
                 @foreach ($timeslots as $key => $timeslot)
                 <tr>
                     <td>{{ ++$i }}</td>
+                    <td>{{ $timeslot->period }}</td>
                     <td>{{ $timeslot->start_time }}</td>
                     <td>{{ $timeslot->end_time }}</td>
                     <td>{{ $timeslot->time_id }}</td>
@@ -93,6 +99,12 @@
             {!! Form::open(array('route' => 'timeslot.store','method'=>'POST')) !!}
             {{ csrf_field() }}
             <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <strong>Period:</strong>
+                        {!! Form::text('period', null, array('placeholder' => 'Period','class' => 'form-control')) !!}
+                    </div>
+                </div>
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
                         <strong>Start Time:</strong>

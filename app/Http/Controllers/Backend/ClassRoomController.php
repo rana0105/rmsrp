@@ -44,8 +44,7 @@ class ClassRoomController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'room_no' => 'required',
-            'room_Type' => 'required'
+            'room_no' => 'required'
         ]);
 
         ClassRoom::create($request->all());
@@ -90,8 +89,7 @@ class ClassRoomController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'room_no' => 'required',
-            'room_Type' => 'required'
+            'room_no' => 'required'
         ]);
 
         $classroom = ClassRoom::find($id);

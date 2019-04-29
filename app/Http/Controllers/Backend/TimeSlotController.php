@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\TimeSlot;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Session;
 
 class TimeSlotController extends Controller
 {
@@ -45,14 +47,20 @@ class TimeSlotController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
+            'period' => 'required',
             'start_time' => 'required',
             'end_time' => 'required',
             'time_id' => 'required'
             //'slot_status' => 'required'
         ]);
 
-        TimeSlot::create($request->all());
-        return redirect()->route('timeslot.index')->with('success', 'Time slot has been save successfully save');
+        $checkTimeSlot = TimeSlot::where('time_id', $request->time_id)->first();
+        if (!$checkTimeSlot) {
+            TimeSlot::create($request->all());
+            return redirect()->route('timeslot.index')->with('success', 'Time slot has been save successfully save');
+        }
+       Session::flash('error', "Already it input");
+       return Redirect::back();
     }
 
     /**
@@ -93,6 +101,7 @@ class TimeSlotController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
+            'period' => 'required',
             'start_time' => 'required',
             'end_time' => 'required',
             'time_id' => 'required'

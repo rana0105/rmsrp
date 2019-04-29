@@ -2,6 +2,10 @@
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group">
+            <strong>Period:</strong>
+            {!! Form::text('period', null, array('placeholder' => 'Period','class' => 'form-control', 'required' => '')) !!}
+        </div>
+        <div class="form-group">
             <strong>Start Time:</strong>
             {!! Form::text('start_time', null, array('placeholder' => 'Start Time','class' => 'form-control', 'required' => '')) !!}
         </div>
