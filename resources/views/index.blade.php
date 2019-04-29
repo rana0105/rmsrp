@@ -9,8 +9,7 @@
 					<div class="col-lg-6 ttt">
 						<div class="banner_content">
 							<h2>
-								We Rank the Best <br>
-								Courses on the Web
+								We See our daily routine 
 							</h2>
 							{{-- <p>
 								In the history of modern astronomy, there is probably no one greater leap forward than the building and launch
