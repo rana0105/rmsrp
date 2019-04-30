@@ -57,6 +57,10 @@ Route::prefix('admin')->group(function () {
     Route::resource('weekday', 'Backend\WeekDayController');
     Route::get('editWeekDay/{id}', 'Backend\WeekDayController@editWeekDay');
 
+    // Class routine
+    Route::resource('routine', 'Backend\RoutineController');
+    Route::get('editRoutine/{id}', 'Backend\RoutineController@editRoutine');
+
 
 });
 

@@ -1,5 +1,11 @@
 # Changelog
 
+## 6.34.2 - 2019-04-26
+* [#642](https://github.com/stripe/stripe-php/pull/642) Fix an issue where existing idempotency keys would be overwritten when using automatic retries
+
+## 6.34.1 - 2019-04-25
+* [#640](https://github.com/stripe/stripe-php/pull/640) Add missing phpdocs 
+
 ## 6.34.0 - 2019-04-24
 * [#626](https://github.com/stripe/stripe-php/pull/626) Add support for the `TaxRate` resource and APIs
 * [#639](https://github.com/stripe/stripe-php/pull/639) Fix multiple phpdoc issues

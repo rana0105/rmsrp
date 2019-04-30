@@ -31,7 +31,7 @@
                 <tr>
                     <th>No</th>
                     <th>Room No</th>
-                    <th>Room Type</th>
+                    {{-- <th>Room Type</th> --}}
                     <th>Action</th>
                 </tr>
             </thead>
@@ -39,7 +39,7 @@
                 <tr>
                     <th>No</th>
                     <th>Room No</th>
-                    <th>Room Type</th>
+                    {{-- <th>Room Type</th> --}}
                     <th>Action</th>
                 </tr>
             </tfoot>
@@ -48,13 +48,13 @@
                 <tr>
                     <td>{{ ++$i }}</td>
                     <td>{{ $classroom->room_no }}</td>
-                    <td>
+                    {{-- <td>
                         @if($classroom->room_Type == 1)
                          <span class="badge badge-info">Theory</span>
                         @else
                         <span class="badge badge-info">Lab</span>
                         @endif
-                    </td>
+                    </td> --}}
                     <td>
                         <a class="btn btn-sm btn-light editClassRoom" data-toggle="modal" data-target="#classroomEditModal" data-id="{{$classroom->id}}" href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                         {{-- {!! Form::open(['method' => 'DELETE','route' => ['classroom.destroy', $classroom->id], 'class'=>'delete_form', 'style'=>'display:inline']) !!}
@@ -99,7 +99,7 @@
                         {!! Form::text('room_no', null, array('placeholder' => 'Room No','class' => 'form-control')) !!}
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-12">
+                {{-- <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
                         <strong>Class Type:</strong>
                         <select name="room_Type" class="custom-select mr-sm-2" id="room_Type" required>                            
@@ -107,7 +107,7 @@
                             <option value="0">Lab</option>
                         </select>
                     </div>
-                </div>
+                </div> --}}
                 <div class="col-xs-12 col-sm-12 col-md-12 text-center">
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>

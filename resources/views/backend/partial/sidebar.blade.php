@@ -40,4 +40,9 @@
         <i class="fas fa-bullhorn"></i>
         <span>Week Day</span></a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('routine.index') }}">
+        <i class="fas fa-bullhorn"></i>
+        <span>Class Routine</span></a>
+    </li>
 </ul>
