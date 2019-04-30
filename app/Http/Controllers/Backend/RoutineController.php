@@ -33,6 +33,7 @@ class RoutineController extends Controller
 
         $day = Carbon::now()->format( 'l' );
         $routines = Routine::all();
+
         $days = WeekDay::pluck('weekday', 'id');
         $course = Course::pluck('title', 'id');
         $semester = Semester::pluck('semester', 'id');
@@ -119,7 +120,7 @@ class RoutineController extends Controller
                 Session::flash('error', "This Faculty is not free right now");
                 return redirect()->back();
             }else{
-                Session::flash('error', "This alldfdfdfdfdfd is not free right now");
+                Session::flash('error', "This is not free right now");
                 return redirect()->back();
             }
         }
@@ -143,10 +144,20 @@ class RoutineController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function editCourse($id)
+    public function editRoutine($id)
     {
-        $course = Course::find($id);
-        return view('backend.course.editCourse', compact('course'));
+        $day = Carbon::now()->format( 'l' );
+        $routines = Routine::all();
+
+        $days = WeekDay::pluck('weekday', 'id');
+        $course = Course::pluck('title', 'id');
+        $semester = Semester::pluck('semester', 'id');
+        $faculty = User::pluck('name', 'id');
+        $period = TimeSlot::pluck('period', 'time_id');
+        $room = ClassRoom::pluck('room_no', 'id');
+        $routine = Routine::find($id);
+
+        return view('backend.routine.editRoutine', compact('routine','days', 'course', 'semester', 'room', 'faculty', 'period'));
     }
 
     /**
@@ -159,16 +170,67 @@ class RoutineController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'title' => 'required',            
-            'course_code' => 'required',
+            'days' => 'required',
+            'faculty' => 'required',
+            'course' => 'required',
+            'room' => 'required',
+            'semester' => 'required',
+            'period' => 'required',
+            'section' => 'required',
+            'room_type' => 'required'
         ]);
 
-        $course = Course::find($id);
-        $course->update([
-            'title' => $request->input('title'),
-            'course_code' => $request->input('course_code'),
-        ]);
-        return redirect()->route('course.index')->with('success', 'Course has been updated successfully');
+        $allCheck = Routine::where('day_id', $request->days)
+                        ->where('semester_id', $request->semester)
+                        ->where('faculty_id', $request->faculty)
+                        ->where('course_id', $request->course)
+                        ->where('class_room_id', $request->room)
+                        ->where('time_slots_id', $request->period)->first();
+
+
+        $checkRoomClash = Routine::where('class_room_id', $request->room)
+                        ->where('course_id', $request->course)->first();
+
+        $checkTimeClash = Routine::where('time_slots_id', $request->period)
+                        ->where('course_id', $request->course)->first();
+
+        $checkFacultyTime = Routine::where('faculty_id', $request->faculty)
+                        ->where('time_slots_id', $request->period)->first();
+
+        if (!$allCheck && !$checkRoomClash && !$checkTimeClash && !$checkFacultyTime) {
+
+            $routine = Routine::find($id);
+            $routine->day_id = $request->input('days');
+            $routine->semester_id = $request->input('semester');             
+            $routine->faculty_id = $request->input('faculty');
+            $routine->course_id = $request->input('course');        
+            $routine->class_room_id = $request->input('room');
+            $routine->time_slots_id = $request->input('period');
+            $routine->section = $request->input('section');
+            $routine->room_type = $request->input('room_type');
+            $routine->save();
+            
+            return redirect()->back()->with('success', 'Routine Updated successfully');
+        }else{
+
+            if ($allCheck) {
+                Session::flash('error', "All of not free right now");
+                return redirect()->back();
+            }elseif ($checkRoomClash) {
+                Session::flash('error', "This ClassRoom is not free right now");
+                return redirect()->back();
+            }elseif ($checkTimeClash) {
+                Session::flash('error', "This Time slot is not free right now");
+                return redirect()->back();
+            }elseif ($checkFacultyTime) {
+                Session::flash('error', "This Faculty is not free right now");
+                return redirect()->back();
+            }else{
+                Session::flash('error', "This is not free right now");
+                return redirect()->back();
+            }
+        }
+
     }
 
     /**
@@ -179,8 +241,8 @@ class RoutineController extends Controller
      */
     public function destroy($id)
     {
-        Course::find($id)->delete();
-        return redirect()->route('course.index')->with('success', 'Course has been deleted successfully');
+        Routine::find($id)->delete();
+        return redirect()->route('routine.index')->with('success', 'Routine has been deleted successfully');
     }
 }
 

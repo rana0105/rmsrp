@@ -2,6 +2,6 @@
 .form_group_time {
     display: flex;
 }
-div#routineCreateModal select, div#routineCreateModal input {
+div#routineCreateModal select, div#routineCreateModal input, #routineEditModal select, #routineEditModal input {
     margin-bottom: 1em;
 }
