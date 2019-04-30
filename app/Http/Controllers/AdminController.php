@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
-use DB;
+use App\User;
+use App\Models\Backend\Course;
+use App\Models\Semester;
+use App\Models\ClassRoom;
 use Auth;
 class AdminController extends Controller
 {
@@ -23,7 +26,12 @@ class AdminController extends Controller
      */
     public function index()
     {
-      return view('backend.dashboard');
+      $faculties = User::count();
+      $course = Course::count();
+      $semester = Semester::count();
+      $rooms = ClassRoom::count();
+
+      return view('backend.dashboard', compact('faculties','course','semester','rooms'));
     }
 
 }
