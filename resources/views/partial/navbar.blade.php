@@ -20,8 +20,8 @@
 								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
 								 aria-expanded="false">Routine</a>
 								<ul class="dropdown-menu">
-									<li class="nav-item"><a class="nav-link" href="#">Theory</a></li>
-									<li class="nav-item"><a class="nav-link" href="#">Lab</a></li>
+									<li class="nav-item"><a class="nav-link" href="{{ route('theory') }}">Theory</a></li>
+									<li class="nav-item"><a class="nav-link" href="{{ route('lab') }}">Lab</a></li>
 								</ul>
 							</li>
 							

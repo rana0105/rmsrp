@@ -14,9 +14,13 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+// Route::get('/', function () {
+//     return view('index');
+// });
+
+Route::get('/', 'FrontendController@index')->name('frontend');
+Route::get('theory-routine', 'FrontendController@theory')->name('theory');
+Route::get('lab-routine', 'FrontendController@lab')->name('lab');
 
 Auth::routes();
 
