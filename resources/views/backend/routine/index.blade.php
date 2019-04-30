@@ -38,28 +38,41 @@
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Routine</th>
-                    <th>Email</th>
-                    <th>Phone No</th>
-                    <th>Action</th>
+                    <th>Day</th>
+                    <th>Semister</th>
+                    <th>Course</th>
+                    <th>Section</th>
+                    <th>Faculty</th>
+                    <th>Time Slots</th>
+                    <th>Class Room</th>
+                    <th>Room Type</th>
                 </tr>
             </thead>
             <tfoot>
                 <tr>
                     <th>No</th>
-                    <th>Routine</th>
-                    <th>Email</th>
-                    <th>Phone No</th>
-                    <th>Action</th>
+                    <th>Day</th>
+                    <th>Semister</th>
+                    <th>Course</th>
+                    <th>Section</th>
+                    <th>Faculty</th>
+                    <th>Time Slots</th>
+                    <th>Class Room</th>
+                    <th>Room Type</th>
                 </tr>
             </tfoot>
             <tbody>
                 @foreach ($routines as $key => $routine)
                 <tr>
                     <td>{{ ++$i }}</td>
-                    <td>{{ $routine->name }}</td>   
-                    <td>{{ $routine->email }}</td>
-                    <td>{{ $routine->phone_no }}</td>
+                    <td>{{ $routine->days->weekday }}</td>   
+                    <td>{{ $routine->semesters->semester}}</td>
+                    <td>{{ $routine->course->title}}</td>
+                    <td>{{ $routine->section }}</td>
+                    <td>{{ $routine->faculty->name}}</td>
+                    <td>{{ $routine->timeSlot->period}}</td>
+                    <td>{{ $routine->classRoom->room_no}}</td>
+                    <td>{{ $routine->room_type}}</td>
                     <td>
                         <a class="btn btn-sm btn-light editRoutine" data-toggle="modal" data-target="#routineEditModal" data-id="{{$routine->id}}" href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                         {!! Form::open(['method' => 'DELETE','route' => ['routine.destroy', $routine->id], 'class'=>'delete_form', 'style'=>'display:inline']) !!}
@@ -72,7 +85,7 @@
         </table>
         </div>
     </div>
-    <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+    <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>     
 
 {{-- Start Modal 'for' post category create --}}
 <div class="modal fade" id="routineCreateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -133,7 +146,6 @@
                             <option value="C">C</option>
                             <option value="D">D</option>
                         </select>
-                        <!-- {!! Form::text('year', null, array('placeholder' => 'Academic year:','class' => 'form-control')) !!} -->
                          
                     </div>
                 </div>
@@ -151,16 +163,16 @@
 {{-- End post category create Modal --}}
 
 {{-- Start Modal 'for' Post category edit --}}
-<div class="modal fade" id="facultyEditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="routineEditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Faculty Edit</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Routine Edit</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <div class="modal-body regionEditAdd">
+        <div class="modal-body routineEditAdd">
            
         </div>
         <div class="modal-footer">
@@ -180,11 +192,11 @@
 @section('script')
 <script>
     $(document).ready(function(){
-        //edit region in modal
-        $(document).on('click', 'a.editFaculty', function() {
+        //edit routine in modal
+        $(document).on('click', 'a.editRoutine', function() {
             var id = $(this).attr('data-id');
-            $.get('editFaculty/'+id, function(data){
-                $('#facultyEditModal').find('.regionEditAdd').first().html(data);
+            $.get('editRoutine/'+id, function(data){
+                $('#routineEditModal').find('.routineEditAdd').first().html(data);
             });
         });
        
