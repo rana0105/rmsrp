@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                    <h3>Welcome To RMS</h3>
                 </div>
             </div>
         </div>

@@ -30,7 +30,7 @@
 			        </table>
 			        </div>
 			    </div> --}}
-			    <form action="{{ route('searchTheory') }}" method="POST">
+			    <form class="form-inline search_form" action="{{ route('searchTheory') }}" method="POST">
 		        		{{ csrf_field() }}
 		        <div class="col-md-5">
 		            @php $day = \Carbon\Carbon::now()->format( 'l' ); @endphp 
@@ -86,7 +86,7 @@
 			                @foreach ($routines as $key => $routine)
 			                <tr>
 			                    <td>{{ ++$key }}</td>
-			                    <td>{{$routine->days ? $routine->days->weekday : ''}}</td>   
+			                    <td>{{$routine->day_id}}</td>   
 			                    <td>{{ $routine->semesters->semester}}</td>
 			                    <td>{{ $routine->course->title}}</td>
 			                    <td>{{ $routine->section }}</td>

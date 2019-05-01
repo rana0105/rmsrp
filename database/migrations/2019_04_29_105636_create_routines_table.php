@@ -19,17 +19,12 @@ class CreateRoutinesTable extends Migration
             $table->integer('semester_id')->unsigned();
             $table->integer('course_id')->unsigned();
             $table->string('section');
-            $table->string('Academic Year');
+            $table->string('academic_year');
             $table->integer('faculty_id')->unsigned();
             $table->integer('time_slots_id')->unsigned();
-            $table->integer('class_room_id')->unsigned();            
-            $table->timestamps();
-
-            $table->foreign('semester_id')->references('id')->on('semesters')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('course_id')->references('id')->on('courses')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('time_slots_id')->references('id')->on('time_slots')->onUpdate('cascade')->onDelete('cascade');                    
-            $table->foreign('class_room_id')->references('id')->on('class_rooms')->onUpdate('cascade')->onDelete('cascade');        
-            $table->foreign('faculty_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');                       
+            $table->integer('class_room_id')->unsigned(); 
+            $table->string('room_type');           
+            $table->timestamps();                       
             
         });
     }
