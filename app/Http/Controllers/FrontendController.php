@@ -32,8 +32,8 @@ class FrontendController extends Controller
     public function theory()
     {
         $day = Carbon::now()->format( 'l' );
-        $day_of_week = date('N', strtotime($day));
-        $curentDay = $day_of_week + 2;
+        //$day_of_week = date('N', strtotime($day));
+        //$curentDay = $day_of_week + 2;
 
         $days = WeekDay::pluck('weekday', 'id');
         $course = Course::pluck('title', 'id');
@@ -43,11 +43,11 @@ class FrontendController extends Controller
         $period = TimeSlot::pluck('period', 'time_id');
         $room = ClassRoom::pluck('room_no', 'id'); 
 
-        $routines = Routine::where('day_id', $curentDay)
+        $routines = Routine::where('day_id', $day)
                     ->where('semester_id', 1)
                     ->where('room_type', 1)
                         ->get();
-                        
+        //dd($routines);                
         return view('pages.theory',compact('routines','days', 'course', 'semester', 'room', 'faculty', 'period'));
     }
 
@@ -55,8 +55,8 @@ class FrontendController extends Controller
     public function searchTheory(Request $request)
     {
         $day = Carbon::now()->format( 'l' );
-        $day_of_week = date('N', strtotime($day));
-        $curentDay = $day_of_week + 2;
+        // $day_of_week = date('N', strtotime($day));
+        // $curentDay = $day_of_week + 2;
 
         $days = WeekDay::pluck('weekday', 'id');
         $course = Course::pluck('title', 'id');
@@ -76,8 +76,8 @@ class FrontendController extends Controller
     public function lab()
     {
         $day = Carbon::now()->format( 'l' );
-        $day_of_week = date('N', strtotime($day));
-        $curentDay = $day_of_week + 2;
+        // $day_of_week = date('N', strtotime($day));
+        // $curentDay = $day_of_week + 2;
 
         $days = WeekDay::pluck('weekday', 'id');
         $course = Course::pluck('title', 'id');
@@ -87,13 +87,34 @@ class FrontendController extends Controller
         $period = TimeSlot::pluck('period', 'time_id');
         $room = ClassRoom::pluck('room_no', 'id'); 
 
-        $routines = Routine::where('day_id', $curentDay)
+        $routines = Routine::where('day_id', $day)
                     ->where('semester_id', 1)
                     ->where('room_type', 0)
                         ->get();
                         
         return view('pages.lab',compact('routines','days', 'course', 'semester', 'room', 'faculty', 'period'));
         return view('pages.lab');
+    }
+
+    public function searchLab(Request $request)
+    {
+        $day = Carbon::now()->format( 'l' );
+        // $day_of_week = date('N', strtotime($day));
+        // $curentDay = $day_of_week + 2;
+
+        $days = WeekDay::pluck('weekday', 'id');
+        $course = Course::pluck('title', 'id');
+        $semester = Semester::all();
+        //dd($semester);
+        $faculty = User::pluck('name', 'id');
+        $period = TimeSlot::pluck('period', 'time_id');
+        $room = ClassRoom::pluck('room_no', 'id'); 
+
+        $routines = Routine::where('day_id', $request->day)
+                    ->where('semester_id', $request->semester)
+                    ->where('room_type', 0)
+                        ->get();          
+        return view('pages.searchLab',compact('routines','days', 'course', 'semester', 'room', 'faculty', 'period'));
     }
 
     

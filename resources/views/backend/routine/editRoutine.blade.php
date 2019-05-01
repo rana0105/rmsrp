@@ -34,7 +34,7 @@
             </select> 
             <select id="period"  name="period" class="form-control">
                 @foreach ($periods as $period)
-                    <option  value="{{ $period->id }}" {{ $period->id == $routine->period_id ? 'selected="selected"' : '' }}>{{ $period->period }}</option>                
+                    <option  value="{{ $period->id }}" {{ $period->id == $routine->time_slots_id ? 'selected="selected"' : '' }}>{{ $period->period }}</option>                
                 @endforeach
             </select>
             <select name="section" id="" class="form-control">

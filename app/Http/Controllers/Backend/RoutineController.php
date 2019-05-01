@@ -166,17 +166,6 @@ class RoutineController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'days' => 'required',
-            'faculty' => 'required',
-            'course' => 'required',
-            'room' => 'required',
-            'semester' => 'required',
-            'period' => 'required',
-            'section' => 'required',
-            'room_type' => 'required'
-        ]);
-
         $allCheck = Routine::where('day_id', $request->days)
                         ->where('semester_id', $request->semester)
                         ->where('faculty_id', $request->faculty)
