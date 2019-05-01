@@ -147,7 +147,6 @@ class RoutineController extends Controller
 
         $day = Carbon::now()->format( 'l' );
         $routine = Routine::find($id);
-        return $routine;
         $days = WeekDay::all();
         $courses = Course::all();
         $semesters = Semester::all();

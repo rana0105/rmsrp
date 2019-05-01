@@ -24,7 +24,7 @@
             @php $day = \Carbon\Carbon::now()->format( 'l' ); @endphp 
            <select name="days" id="" class="form-control">
             @foreach($days as $d)
-               <option value="{{ $d }}" {{ $day == $d ? 'selected="selected"' : '' }}>{{ $d }}</option>
+               <option value="{{ $d->weekday }}" {{ $day == $d->weekday ? 'selected="selected"' : '' }}>{{ $d->weekday }}</option>
             @endforeach
            </select>
         </div>
@@ -67,7 +67,7 @@
                 @foreach ($routines as $key => $routine)
                 <tr>
                     <td>{{ ++$i }}</td>
-                    <td>{{$routine->days ? $routine->days->weekday : ''}}</td>   
+                    <td>{{ $routine->day_id}}</td>   
                     <td>{{ $routine->semesters->semester}}</td>
                     <td>{{ $routine->course->title}}</td>
                     <td>{{ $routine->section }}</td>
