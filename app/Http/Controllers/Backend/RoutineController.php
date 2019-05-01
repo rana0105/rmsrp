@@ -33,16 +33,14 @@ class RoutineController extends Controller
 
         $day = Carbon::now()->format( 'l' );
         $routines = Routine::all();
+        $days = WeekDay::all();
+        $courses = Course::all();
+        $semesters = Semester::all();
+        $faculties = User::all();
+        $periods = TimeSlot::all();
+        $rooms = ClassRoom::all();
 
-        $days = WeekDay::pluck('weekday');
-        $course = Course::pluck('title', 'id');
-        $semester = Semester::pluck('semester', 'id');
-        $faculty = User::pluck('name', 'id');
-        $period = TimeSlot::pluck('period', 'time_id');
-        $room = ClassRoom::pluck('room_no', 'id');
-
-        return view('backend.routine.index',compact('routines','days', 'course', 'semester', 'room', 'faculty', 'period'))
-        ->with('i', ($request->input('page', 1) - 1) * 5);
+        return view('backend.routine.index',compact('routines','days', 'courses', 'semesters', 'rooms', 'faculties', 'periods'))->with('i', ($request->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -146,18 +144,18 @@ class RoutineController extends Controller
      */
     public function editRoutine($id)
     {
+
         $day = Carbon::now()->format( 'l' );
-        $routines = Routine::all();
-
-        $days = WeekDay::pluck('weekday', 'id');
-        $course = Course::pluck('title', 'id');
-        $semester = Semester::pluck('semester', 'id');
-        $faculty = User::pluck('name', 'id');
-        $period = TimeSlot::pluck('period', 'time_id');
-        $room = ClassRoom::pluck('room_no', 'id');
         $routine = Routine::find($id);
+        return $routine;
+        $days = WeekDay::all();
+        $courses = Course::all();
+        $semesters = Semester::all();
+        $faculties = User::all();
+        $periods = TimeSlot::all();
+        $rooms = ClassRoom::all();
 
-        return view('backend.routine.editRoutine', compact('routine','days', 'course', 'semester', 'room', 'faculty', 'period'));
+        return view('backend.routine.editRoutine', compact('routine','days', 'courses', 'semesters', 'rooms', 'faculties', 'periods'));
     }
 
     /**
