@@ -15,7 +15,7 @@ class CreateRoutinesTable extends Migration
     {
         Schema::create('routines', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('day_id')->unsigned();
+            $table->string('day_id');
             $table->integer('semester_id')->unsigned();
             $table->integer('course_id')->unsigned();
             $table->string('section');
@@ -25,7 +25,6 @@ class CreateRoutinesTable extends Migration
             $table->integer('class_room_id')->unsigned();            
             $table->timestamps();
 
-            $table->foreign('day_id')->references('id')->on('week_days')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('semester_id')->references('id')->on('semesters')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('course_id')->references('id')->on('courses')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('time_slots_id')->references('id')->on('time_slots')->onUpdate('cascade')->onDelete('cascade');                    

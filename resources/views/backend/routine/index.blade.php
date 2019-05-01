@@ -46,6 +46,7 @@
                     <th>Time Slots</th>
                     <th>Class Room</th>
                     <th>Room Type</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tfoot>
@@ -59,20 +60,27 @@
                     <th>Time Slots</th>
                     <th>Class Room</th>
                     <th>Room Type</th>
+                    <th>Action</th>
                 </tr>
             </tfoot>
             <tbody>
                 @foreach ($routines as $key => $routine)
                 <tr>
                     <td>{{ ++$i }}</td>
-                    <td>{{ $routine->days->weekday }}</td>   
+                    <td>{{$routine->days ? $routine->days->weekday : ''}}</td>   
                     <td>{{ $routine->semesters->semester}}</td>
                     <td>{{ $routine->course->title}}</td>
                     <td>{{ $routine->section }}</td>
                     <td>{{ $routine->faculty->name}}</td>
                     <td>{{ $routine->timeSlot->period}}</td>
                     <td>{{ $routine->classRoom->room_no}}</td>
-                    <td>{{ $routine->room_type}}</td>
+                    <td>
+                        @if($routine->room_type == 1)
+                         <span class="badge badge-info">Theory</span>
+                        @else
+                        <span class="badge badge-info">Lab</span>
+                        @endif
+                    </td>
                     <td>
                         <a class="btn btn-sm btn-light editRoutine" data-toggle="modal" data-target="#routineEditModal" data-id="{{$routine->id}}" href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                         {!! Form::open(['method' => 'DELETE','route' => ['routine.destroy', $routine->id], 'class'=>'delete_form', 'style'=>'display:inline']) !!}
