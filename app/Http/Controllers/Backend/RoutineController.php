@@ -34,7 +34,7 @@ class RoutineController extends Controller
         $day = Carbon::now()->format( 'l' );
         $routines = Routine::all();
 
-        $days = WeekDay::pluck('weekday', 'id');
+        $days = WeekDay::pluck('weekday');
         $course = Course::pluck('title', 'id');
         $semester = Semester::pluck('semester', 'id');
         $faculty = User::pluck('name', 'id');

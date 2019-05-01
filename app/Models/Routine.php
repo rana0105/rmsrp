@@ -8,7 +8,7 @@ class Routine extends Model
 {   
 
     public function days(){
-        return $this->belongsTo('App\Models\WeekDay', 'id');
+        return $this->belongsTo('App\Models\WeekDay', 'day_id');
     }
 
     public function course(){
@@ -16,15 +16,15 @@ class Routine extends Model
     }
 
     public function semesters(){
-        return $this->belongsTo('App\Models\Semester', 'id');
+        return $this->belongsTo('App\Models\Semester', 'semester_id');
     }
 
     public function timeSlot(){
-        return $this->belongsTo('App\Models\TimeSlot', 'id');
+        return $this->belongsTo('App\Models\TimeSlot', 'time_slots_id');
     }
 
     public function classRoom(){
-        return $this->belongsTo('App\Models\ClassRoom', 'id');
+        return $this->belongsTo('App\Models\ClassRoom', 'class_room_id');
     }
 
     public function faculty(){
