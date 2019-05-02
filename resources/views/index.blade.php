@@ -12,18 +12,6 @@
 								Welcome to our <br>
 								Routine Management System
 							</h2>
-							{{-- <p>
-								In the history of modern astronomy, there is probably no one greater leap forward than the building and launch
-								of
-								the space telescope known as the Hubble.
-							</p> --}}
-							<div class="search_course_wrap">
-								<form action="" class="form_box d-flex justify-content-between w-100">
-									<input type="text" placeholder="Search Courses" class="form-control" name="username" onfocus="this.placeholder = ''"
-									 onblur="this.placeholder = 'Search Courses'">
-									<button type="submit" class="btn search_course_btn">Search</button>
-								</form>
-							</div>
 						</div>
 					</div>
 				</div>

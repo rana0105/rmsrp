@@ -60,7 +60,7 @@
 			                <tr>
 			                    <th>No</th>
 			                    <th>Day</th>
-			                    <th>Semister</th>
+			                    <th>Semester</th>
 			                    <th>Course</th>
 			                    <th>Section</th>
 			                    <th>Faculty</th>
@@ -73,7 +73,7 @@
 			                <tr>
 			                    <th>No</th>
 			                    <th>Day</th>
-			                    <th>Semister</th>
+			                    <th>Semester</th>
 			                    <th>Course</th>
 			                    <th>Section</th>
 			                    <th>Faculty</th>
@@ -91,7 +91,9 @@
 			                    <td>{{ $routine->course->title}}</td>
 			                    <td>{{ $routine->section }}</td>
 			                    <td>{{ $routine->faculty->name}}</td>
-			                    <td>{{ $routine->timeSlot->period}}</td>
+			                    <td>{{ $routine->timeSlot->period }}<br>
+			                    {{ $routine->timeSlot->start_time }}<br>
+			                    {{ $routine->timeSlot->end_time }}</td>
 			                    <td>{{ $routine->classRoom->room_no}}</td>
 			                    <td>
 			                        @if($routine->room_type == 1)

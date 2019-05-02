@@ -32,7 +32,7 @@
 			    </div> --}}
 			    <form class="form-inline search_form" action="{{ route('searchTheory') }}" method="POST">
 		        		{{ csrf_field() }}
-		        <div class="col-md-5">
+		        <div class="col-md-3">
 		            @php $day = \Carbon\Carbon::now()->format( 'l' ); @endphp 
 		           <select name="day" id="" class="form-control">
 		            @foreach($days as $d)
@@ -40,7 +40,7 @@
 		            @endforeach
 		           </select>
 		        </div>
-		        <div class="col-md-5">
+		        <div class="col-md-3">
 		           <select name="semester" id="" class="form-control">
 		            @foreach($semester as $s)
 		               <option value="{{ $s->id }}">{{ $s->semester }}</option>
@@ -49,6 +49,9 @@
 		        </div>
 		        <div class="col-md-2">
 		            <button class="btn btn-sm btn-info">Search</button>
+		        </div> 
+		        <div class="col-md-3">
+		            <button class="btn btn-lg btn-info">Break Time: 10:30 to 11:30</button>
 		        </div> 
 	        </form>
 		    </div>
@@ -60,7 +63,7 @@
 			                <tr>
 			                    <th>No</th>
 			                    <th>Day</th>
-			                    <th>Semister</th>
+			                    <th>Semester</th>
 			                    <th>Course</th>
 			                    <th>Section</th>
 			                    <th>Faculty</th>
@@ -73,7 +76,7 @@
 			                <tr>
 			                    <th>No</th>
 			                    <th>Day</th>
-			                    <th>Semister</th>
+			                    <th>Semester</th>
 			                    <th>Course</th>
 			                    <th>Section</th>
 			                    <th>Faculty</th>
@@ -91,7 +94,9 @@
 			                    <td>{{ $routine->course->title}}</td>
 			                    <td>{{ $routine->section }}</td>
 			                    <td>{{ $routine->faculty->name}}</td>
-			                    <td>{{ $routine->timeSlot->period}}</td>
+			                    <td>{{ $routine->timeSlot->period }}<br>
+			                    {{ $routine->timeSlot->start_time }}<br>
+			                    {{ $routine->timeSlot->end_time }}</td>
 			                    <td>{{ $routine->classRoom->room_no}}</td>
 			                    <td>
 			                        @if($routine->room_type == 1)
