@@ -30,7 +30,7 @@
 			        </table>
 			        </div>
 			    </div> --}}
-			    <form class="form-inline search_form" action="{{ route('searchTheory') }}" method="POST">
+			    <form class="form-inline search_form" action="{{ route('searchTeacher') }}" method="POST">
 		        		{{ csrf_field() }}
 		        <div class="col-md-5">
 		            @php $day = \Carbon\Carbon::now()->format( 'l' ); @endphp 

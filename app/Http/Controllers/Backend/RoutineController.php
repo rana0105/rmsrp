@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Session;
+use DB;
 
 class RoutineController extends Controller
 {
@@ -89,40 +90,106 @@ class RoutineController extends Controller
         $checkFacultyTime = Routine::where('faculty_id', $request->faculty)
                         ->where('time_slots_id', $request->period)->first();
 
-        if (!$allCheck && !$checkRoomClash && !$checkTimeClash && !$checkFacultyTime) {
+        $checkTimeRoom = Routine::where('time_slots_id', $request->period)
+                        ->where('course_id', $request->room)->first();
 
-            $routine = new Routine();
-            $routine->day_id = $request->input('days');
-            $routine->semester_id = $request->input('semester');             
-            $routine->faculty_id = $request->input('faculty');
-            $routine->course_id = $request->input('course');        
-            $routine->class_room_id = $request->input('room');
-            $routine->time_slots_id = $request->input('period');
-            $routine->section = $request->input('section');
-            $routine->room_type = $request->input('room_type');
-            $routine->save();
-            
-            return redirect()->back()->with('success', 'Routine created successfully');
-        }else{
-
-            if ($allCheck) {
-                Session::flash('error', "All of not free right now");
-                return redirect()->back();
-            }elseif ($checkRoomClash) {
-                Session::flash('error', "This ClassRoom is not free right now");
-                return redirect()->back();
-            }elseif ($checkTimeClash) {
-                Session::flash('error', "This Time slot is not free right now");
-                return redirect()->back();
-            }elseif ($checkFacultyTime) {
-                Session::flash('error', "This Faculty is not free right now");
-                return redirect()->back();
-            }else{
-                Session::flash('error', "This is not free right now");
-                return redirect()->back();
-            }
-        }
        
+            $teacherCheckTheory = DB::table('routines')->orderBy('time_slots_id', 'desc')
+            ->where('day_id', $request->days)
+            ->where('faculty_id', $request->faculty)
+            ->where('room_type', $request->room_type)
+            ->count('time_slots_id');
+            //dd($teacherCheckTheory);
+          $teacherCheckLab = DB::table('routines')->orderBy('time_slots_id', 'desc')
+            ->where('day_id', $request->days)
+            ->where('faculty_id', $request->faculty)
+            ->where('room_type', $request->room_type)
+            ->count('time_slots_id');
+        
+        if($teacherCheckTheory < 2 && $request->room_type == 1){
+            if (!$allCheck && !$checkRoomClash && !$checkTimeClash && !$checkFacultyTime && !$checkTimeRoom) {
+
+                $routine = new Routine();
+                $routine->day_id = $request->input('days');
+                $routine->semester_id = $request->input('semester');             
+                $routine->faculty_id = $request->input('faculty');
+                $routine->course_id = $request->input('course');        
+                $routine->class_room_id = $request->input('room');
+                $routine->time_slots_id = $request->input('period');
+                $routine->section = $request->input('section');
+                $routine->room_type = $request->input('room_type');
+                $routine->save();
+                
+                return redirect()->back()->with('success', 'Routine created successfully');
+            }else{
+
+                if ($allCheck) {
+                    Session::flash('error', "All of not free right now");
+                    return redirect()->back();
+                }elseif ($checkRoomClash) {
+                    Session::flash('error', "This ClassRoom is not free right now");
+                    return redirect()->back();
+                }elseif ($checkTimeClash) {
+                    Session::flash('error', "This Time slot is not free right now");
+                    return redirect()->back();
+                }elseif ($checkFacultyTime) {
+                    Session::flash('error', "This Faculty is not free right now");
+                    return redirect()->back();
+                }elseif ($checkTimeRoom) {
+                    Session::flash('error', "This room is not free right now");
+                    return redirect()->back();
+                }else{
+                    Session::flash('error', "This is not free right now");
+                    return redirect()->back();
+                }
+            }
+        }else{
+            Session::flash('error', "This Faculty already two theory class taken");
+            return redirect()->back();
+        }
+
+        if($teacherCheckLab < 3 && $request->room_type == 0){
+            if (!$allCheck && !$checkRoomClash && !$checkTimeClash && !$checkFacultyTime && !$checkTimeRoom) {
+
+                $routine = new Routine();
+                $routine->day_id = $request->input('days');
+                $routine->semester_id = $request->input('semester');             
+                $routine->faculty_id = $request->input('faculty');
+                $routine->course_id = $request->input('course');        
+                $routine->class_room_id = $request->input('room');
+                $routine->time_slots_id = $request->input('period');
+                $routine->section = $request->input('section');
+                $routine->room_type = $request->input('room_type');
+                $routine->save();
+                
+                return redirect()->back()->with('success', 'Routine created successfully');
+            }else{
+
+                if ($allCheck) {
+                    Session::flash('error', "All of not free right now");
+                    return redirect()->back();
+                }elseif ($checkRoomClash) {
+                    Session::flash('error', "This ClassRoom is not free right now");
+                    return redirect()->back();
+                }elseif ($checkTimeClash) {
+                    Session::flash('error', "This Time slot is not free right now");
+                    return redirect()->back();
+                }elseif ($checkFacultyTime) {
+                    Session::flash('error', "This Faculty is not free right now");
+                    return redirect()->back();
+                }elseif ($checkTimeRoom) {
+                    Session::flash('error', "This room is not free right now");
+                    return redirect()->back();
+                }else{
+                    Session::flash('error', "This is not free right now");
+                    return redirect()->back();
+                }
+            }
+        }else{
+            Session::flash('error', "This Faculty already three lab class taken");
+            return redirect()->back();
+        }
+        
     }
 
     /**

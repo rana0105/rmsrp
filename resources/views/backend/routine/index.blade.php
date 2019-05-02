@@ -70,9 +70,11 @@
                     <td>{{ $routine->day_id}}</td>   
                     <td>{{ $routine->semesters->semester}}</td>
                     <td>{{ $routine->course->title}}</td>
-                    <td>{{ $routine->section }}</td>
+                    <td>{{ $routine->section }} 25</td>
                     <td>{{ $routine->faculty->name}}</td>
-                    <td>{{ $routine->timeSlot->period}}</td>
+                    <td>{{ $routine->timeSlot->period }}<br>
+                        {{ $routine->timeSlot->start_time }}<br>
+                        {{ $routine->timeSlot->end_time }}</td>
                     <td>{{ $routine->classRoom->room_no}}</td>
                     <td>
                         @if($routine->room_type == 1)

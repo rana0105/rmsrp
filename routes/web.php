@@ -27,6 +27,7 @@ Route::post('lab-routine-search', 'FrontendController@searchLab')->name('searchL
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::post('/search-teacher-routine', 'HomeController@searchTeacher')->name('searchTeacher');
 
 // admin route for dashboard
 Route::prefix('admin')->group(function () {
