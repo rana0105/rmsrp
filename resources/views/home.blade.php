@@ -33,19 +33,12 @@
                 <form class="form-inline search_form" action="{{ route('searchTeacher') }}" method="POST">
                         {{ csrf_field() }}
                 <div class="col-md-5">
-                    @php $day = \Carbon\Carbon::now()->format( 'l' ); @endphp 
-                   <select name="day" id="" class="form-control">
-                    @foreach($days as $d)
-                       <option value="{{ $d }}" {{ $day == $d ? 'selected="selected"' : '' }}>{{ $d }}</option>
-                    @endforeach
+                   <select name="faculty" id="" class="form-control">
+                       <option value="{{ Auth::user()->id }}">{{ Auth::user()->name }}</option>                  
                    </select>
                 </div>
                 <div class="col-md-5">
-                   <select name="semester" id="" class="form-control">
-                    @foreach($semester as $s)
-                       <option value="{{ $s->id }}">{{ $s->semester }}</option>
-                    @endforeach
-                   </select>
+                    <input type="text" name="course_code" placeholder="Course Code" class="form-control">
                 </div>
                 <div class="col-md-2">
                     <button class="btn btn-sm btn-info">Search</button>
@@ -58,50 +51,30 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>No</th>
                                 <th>Day</th>
-                                <th>Semester</th>
-                                <th>Course</th>
-                                <th>Section</th>
-                                <th>Faculty</th>
-                                <th>Time Slots</th>
-                                <th>Class Room</th>
-                                <th>Room Type</th>
+                                @foreach($time_slots as $i => $time_slot)
+                                    <th>{{$time_slot->start_time}} - {{$time_slot->end_time}}</th>
+                                    @if($i == 2)
+                                        <th>Break</th>
+                                    @endif
+                                @endforeach
                             </tr>
                         </thead>
-                        <tfoot>
-                            <tr>
-                                <th>No</th>
-                                <th>Day</th>
-                                <th>Semester</th>
-                                <th>Course</th>
-                                <th>Section</th>
-                                <th>Faculty</th>
-                                <th>Time Slots</th>
-                                <th>Class Room</th>
-                                <th>Room Type</th>
-                            </tr>
-                        </tfoot>
                         <tbody>
                             @foreach ($routines as $key => $routine)
                             <tr>
-                                <td>{{ ++$key }}</td>
-                                <td>{{$routine->day_id}}</td>   
-                                <td>{{ $routine->semesters->semester}}</td>
-                                <td>{{ $routine->course->title}}</td>
-                                <td>{{ $routine->section }}</td>
-                                <td>{{ $routine->faculty->name}}</td>
-                                <td>{{ $routine->timeSlot->period }}<br>
-                                {{ $routine->timeSlot->start_time }}<br>
-                                {{ $routine->timeSlot->end_time }}</td>
-                                <td>{{ $routine->classRoom->room_no}}</td>
-                                <td>
-                                    @if($routine->room_type == 1)
-                                     <span class="badge badge-info">Theory</span>
-                                    @else
-                                    <span class="badge badge-info">Lab</span>
-                                    @endif
-                                </td>
+                                <td>{{$routine->day_id}}</td>
+                                    @foreach($time_slots as $i => $time_slot)
+                                        
+                                        @if($time_slot->id == $routine->time_slots_id)   
+                                            <td>{{ $routine->course->title}} <br> CC:{{ $routine->course->course_code }}<br> RN:{{ $routine->classRoom->room_no }}</td>
+                                        @else
+                                        <td></td>
+                                        @endif
+                                        @if($i == 2)
+                                            <th>Break</th>
+                                        @endif
+                                    @endforeach
                             </tr>
                             @endforeach
                         </tbody>

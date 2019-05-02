@@ -32,46 +32,29 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        $day = Carbon::now()->format( 'l' );
-        // $day_of_week = date('N', strtotime($day));
-        // $curentDay = $day_of_week + 2;
+        $time_slots = TimeSlot::all();
 
-        $days = WeekDay::pluck('weekday', 'id');
-        $course = Course::pluck('title', 'id');
-        $semester = Semester::all();
-        //dd($semester);
-        $faculty = User::pluck('name', 'id');
-        $period = TimeSlot::pluck('period', 'time_id');
-        $room = ClassRoom::pluck('room_no', 'id'); 
+        $routines = Routine::where('faculty_id', Auth::user()->id)->get();   
 
-        $routines = Routine::where('faculty_id', Auth::user()->id)
-                    ->where('day_id', $day)
-                    ->where('semester_id', 1)
-                    ->get();   
-
-        return view('home',compact('routines','days', 'course', 'semester', 'room', 'faculty', 'period'));
-        return view('home');
+        return view('home',compact('routines', 'time_slots'));
+        
     }
 
     public function searchTeacher(Request $request)
     {
-        $day = Carbon::now()->format( 'l' );
-        // $day_of_week = date('N', strtotime($day));
-        // $curentDay = $day_of_week + 2;
+        $time_slots = TimeSlot::all();
 
-        $days = WeekDay::pluck('weekday', 'id');
-        $course = Course::pluck('title', 'id');
-        $semester = Semester::all();
-        //dd($semester);
-        $faculty = User::pluck('name', 'id');
-        $period = TimeSlot::pluck('period', 'time_id');
-        $room = ClassRoom::pluck('room_no', 'id'); 
-
-        $routines = Routine::where('faculty_id', Auth::user()->id)
-                    ->where('day_id', $request->day)
-                    ->where('semester_id', $request->semester)
-                    ->where('room_type', 1)
-                        ->get();          
-        return view('searchTeacher',compact('routines','days', 'course', 'semester', 'room', 'faculty', 'period'));
+        if($request->course_code){
+            $course_id = Course::where('course_code', $request->course_code)->first()->id;
+            $routines = Routine::where('faculty_id', $request->faculty)
+                    ->where('course_id', $course_id)
+                        ->get(); 
+        }else{
+            $routines = Routine::where('faculty_id', $request->faculty)
+                        ->get(); 
+        }
+          
+        
+        return view('searchTeacher',compact('routines','time_slots'));
     }
 }
